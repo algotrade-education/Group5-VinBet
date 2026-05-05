@@ -125,13 +125,13 @@ uv sync
 
 ## 5. Project Structure
 ```
-vinbet/
+aightbet/
 ├── main.py                # Data collection entry point
 ├── tune_alpha.py          # Optuna optimization script
 ├── test_tuned.py          # OOS testing script
 ├── train_ensemble.py      # Train Ensemble Models script
 ├── test_ensemble.py       # OOS testing Ensemble Models script
-├── vinbet/                # Core package
+├── aightbet/                # Core package
 │   ├── db_postgres.py     # PostgreSQL connector
 │   ├── processing.py      # OHLCV resampling
 │   ├── features.py        # Technical indicator logic
