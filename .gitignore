@@ -1,0 +1,10 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/quickfix-1.15.1/
+*.egg-info
+logs/
+# Virtual environments
+.venv

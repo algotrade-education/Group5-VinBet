@@ -1,0 +1,77 @@
+{
+  "weights": {
+    "lgbm": 0.55,
+    "xgb": 0.3,
+    "cat": 0.15
+  },
+  "threshold": 0.54,
+  "feature_columns": [
+    "log_ret",
+    "mom_1",
+    "mom_3",
+    "mom_5",
+    "vol_5",
+    "vol_20",
+    "rsi_14",
+    "MACD_12_26_9",
+    "MACDh_12_26_9",
+    "MACDs_12_26_9",
+    "BBL_20_2.0",
+    "BBM_20_2.0",
+    "BBU_20_2.0",
+    "BBB_20_2.0",
+    "BBP_20_2.0",
+    "atr_14",
+    "day_of_week_cat",
+    "session_bucket_cat",
+    "volatility_regime_cat",
+    "trend_regime_cat",
+    "volume_regime_cat",
+    "ret_sign_pattern_cat"
+  ],
+  "categorical_columns": [
+    "day_of_week_cat",
+    "session_bucket_cat",
+    "volatility_regime_cat",
+    "trend_regime_cat",
+    "volume_regime_cat",
+    "ret_sign_pattern_cat"
+  ],
+  "stop_loss": 0.0056,
+  "take_profit": 0.0214,
+  "train_ratio": 0.8,
+  "session_bucket_schedule": [
+    [
+      540,
+      555
+    ],
+    [
+      555,
+      585
+    ],
+    [
+      585,
+      615
+    ],
+    [
+      615,
+      660
+    ],
+    [
+      660,
+      690
+    ],
+    [
+      780,
+      795
+    ],
+    [
+      795,
+      840
+    ],
+    [
+      840,
+      870
+    ]
+  ]
+}

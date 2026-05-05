@@ -1,0 +1,26 @@
+[project]
+name = "vinbet"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "catboost>=1.2.8",
+    "duckdb>=1.4.4",
+    "lightgbm>=4.6.0",
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.2",
+    "optuna>=4.7.0",
+    "pandas>=3.0.0",
+    "pandas-ta-classic>=0.3.59",
+    "psycopg[binary,pool]>=3.3.2",
+    "scikit-learn>=1.8.0",
+    "tabulate>=0.9.0",
+    "xgboost>=2.1.4",
+    "quickfix==1.15.1",
+    "paperbroker-client==0.2.2",
+]
+
+[tool.uv.sources]
+quickfix = { path = "wheels/quickfix-1.15.1-cp313-cp313-win_amd64.whl" }
+paperbroker-client = { path = "wheels/paperbroker_client-0.2.2-py3-none-any.whl" }

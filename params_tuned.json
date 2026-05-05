@@ -1,0 +1,11 @@
+{
+    "learning_rate": 0.027863124711859765,
+    "num_leaves": 28,
+    "feature_fraction": 0.6140869289475007,
+    "bagging_fraction": 0.6350239748230624,
+    "bagging_freq": 6,
+    "min_child_samples": 172,
+    "threshold": 0.5597851778296683,
+    "stop_loss": 0.0033243504532825176,
+    "take_profit": 0.02635176681072657
+}
