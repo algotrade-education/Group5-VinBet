@@ -1,4 +1,4 @@
-# VinBet: VN30 Index Futures Quantitative Alpha
+# AightBet: VN30 Index Futures Quantitative Alpha
 
 This project implements a selective, machine-learning-based alpha strategy for the VN30 Index Futures market.
 
