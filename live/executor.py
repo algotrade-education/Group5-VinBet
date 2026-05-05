@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from vinbet.ensemble import WeightedEnsembleClassifier
+from aightbet.ensemble import WeightedEnsembleClassifier
 
 logger = logging.getLogger(__name__)
 

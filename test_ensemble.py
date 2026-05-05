@@ -2,10 +2,10 @@ import argparse
 import json
 import pandas as pd
 
-from vinbet import fetch_quotes, fetch_volume, process_ohlcv
-from vinbet.backtest import Backtester
-from vinbet.ensemble import WeightedEnsembleClassifier
-from vinbet.features import add_technical_features, create_target, load_ohlcv_from_duckdb
+from aightbet import fetch_quotes, fetch_volume, process_ohlcv
+from aightbet.backtest import Backtester
+from aightbet.ensemble import WeightedEnsembleClassifier
+from aightbet.features import add_technical_features, create_target, load_ohlcv_from_duckdb
 
 
 def _build_args():

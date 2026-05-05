@@ -822,7 +822,7 @@ wheels = [
 ]
 
 [[package]]
-name = "vinbet"
+name = "aightbet"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

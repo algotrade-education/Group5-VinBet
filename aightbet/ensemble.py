@@ -224,6 +224,7 @@ class WeightedEnsembleClassifier:
         cls._check_dependencies(use_catboost=True)
         out = Path(output_dir)
 
+
         with open(out / 'ensemble_config.json', 'r', encoding='utf-8') as f:
             config = json.load(f)
 

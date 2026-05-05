@@ -5,16 +5,16 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from vinbet.backtest import Backtester
-from vinbet.metrics import calculate_metrics
-from vinbet.features import (
+from aightbet.backtest import Backtester
+from aightbet.metrics import calculate_metrics
+from aightbet.features import (
     CATEGORICAL_REGIME_COLUMNS,
     DEFAULT_SESSION_BUCKET_SCHEDULE,
     add_technical_features,
     create_target,
     load_ohlcv_from_duckdb,
 )
-from vinbet.ensemble import EnsembleWeights, WeightedEnsembleClassifier, split_time_series
+from aightbet.ensemble import EnsembleWeights, WeightedEnsembleClassifier, split_time_series
 
 
 def _parse_schedule(raw_schedule: str):

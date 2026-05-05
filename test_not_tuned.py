@@ -3,9 +3,9 @@ import pandas as pd
 import numpy as np
 import lightgbm as lgb
 import matplotlib.pyplot as plt
-from vinbet import fetch_quotes, fetch_volume, process_ohlcv
-from vinbet.features import load_ohlcv_from_duckdb, add_technical_features, create_target
-from vinbet.backtest import Backtester
+from aightbet import fetch_quotes, fetch_volume, process_ohlcv
+from aightbet.features import load_ohlcv_from_duckdb, add_technical_features, create_target
+from aightbet.backtest import Backtester
 
 def main():
     # 1. Load Not-Tuned Parameters

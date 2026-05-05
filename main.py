@@ -1,4 +1,4 @@
-from vinbet import config, fetch_quotes, fetch_volume, process_ohlcv, save_ohlcv_to_duckdb
+from aightbet import config, fetch_quotes, fetch_volume, process_ohlcv, save_ohlcv_to_duckdb
 import pandas as pd
 import time
 

@@ -4,9 +4,9 @@ import numpy as np
 import lightgbm as lgb
 import json
 from pathlib import Path
-from vinbet.features import load_ohlcv_from_duckdb, add_technical_features, create_target
-from vinbet.backtest import Backtester
-from vinbet.metrics import calculate_metrics
+from aightbet.features import load_ohlcv_from_duckdb, add_technical_features, create_target
+from aightbet.backtest import Backtester
+from aightbet.metrics import calculate_metrics
 import matplotlib.pyplot as plt
 
 # Global data to avoid reloading every trial

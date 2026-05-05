@@ -6,9 +6,9 @@ import asyncio
 import math
 from collections import deque
 
-from vinbet import config
-from vinbet.db_postgres import fetch_quotes, fetch_volume
-from vinbet.processing import process_ohlcv
+from aightbet import config
+from aightbet.db_postgres import fetch_quotes, fetch_volume
+from aightbet.processing import process_ohlcv
 from paperbroker.client import PaperBrokerClient
 from paperbroker.market_data import KafkaMarketDataClient, QuoteSnapshot
 from live.candles_builder import CandleBuilder

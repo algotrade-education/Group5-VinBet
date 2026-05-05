@@ -7,7 +7,7 @@ import pandas as pd
 class FeatureEngine:
     """
     Converts candles into numerical features for strategies.
-    Adapted from vinbet.features.add_technical_features logic for streaming.
+    Adapted from aightbet.features.add_technical_features logic for streaming.
     """
 
     def __init__(

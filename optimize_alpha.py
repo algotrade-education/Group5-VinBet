@@ -1,6 +1,6 @@
-from vinbet.features import load_ohlcv_from_duckdb, add_technical_features, create_target
-from vinbet.model import train_lgbm_model, evaluate_model
-from vinbet.backtest import Backtester
+from aightbet.features import load_ohlcv_from_duckdb, add_technical_features, create_target
+from aightbet.model import train_lgbm_model, evaluate_model
+from aightbet.backtest import Backtester
 import pandas as pd
 import numpy as np
 
