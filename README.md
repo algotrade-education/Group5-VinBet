@@ -26,14 +26,14 @@ A selective, high-confidence machine learning model can identify 5-minute window
 
 ## 2. In-Sample Backtesting (2023 – 2025)
 
-The model was trained on 80% of the historical data and validated on the remaining 20% to find the optimal hyperparameters using Optuna.
+The full LightLGBM model was trained on 80% of the historical data and validated on the remaining 20% to find the optimal hyperparameters using Optuna.
 
 | Metric                 | Training Set (80%) | Validation Set (20%) |
 |:-----------------------|:-------------------|:---------------------|
-| **Total Return**       | 436.32%            | 35.33%               |
-| **Annual Return**      | 98.61%             | 74.73%               |
-| **Sharpe Ratio**       | 4.95               | 3.81                 |
-| **Max Drawdown (MDD)** | -5.47%             | -5.12%               |
+| **Total Return**       | 225.83%            | 32.46%               |
+| **Annual Return**      | 62.03%             | 67.96%               |
+| **Sharpe Ratio**       | 3.74               | 3.36                 |
+| **Max Drawdown (MDD)** | -4.46%             | -3.99%               |
 
 **Observation:** The strategy showed high stability across the historical period. The selective threshold, 0.55 significantly reduced the number of trades, ensuring that only the highest probability setups were taken.
 
