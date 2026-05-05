@@ -1,4 +1,4 @@
-# aightbet: VN30 Index Futures Quantitative Alpha
+# AightBet: VN30 Index Futures Quantitative Alpha
 
 This project implements a selective, machine-learning-based alpha strategy for the VN30 Index Futures market.
 
@@ -26,14 +26,14 @@ A selective, high-confidence machine learning model can identify 5-minute window
 
 ## 2. In-Sample Backtesting (2023 – 2025)
 
-The model was trained on 80% of the historical data and validated on the remaining 20% to find the optimal hyperparameters using Optuna.
+The full LightLGBM model was trained on 80% of the historical data and validated on the remaining 20% to find the optimal hyperparameters using Optuna.
 
 | Metric                 | Training Set (80%) | Validation Set (20%) |
 |:-----------------------|:-------------------|:---------------------|
-| **Total Return**       | 436.32%            | 35.33%               |
-| **Annual Return**      | 98.61%             | 74.73%               |
-| **Sharpe Ratio**       | 4.95               | 3.81                 |
-| **Max Drawdown (MDD)** | -5.47%             | -5.12%               |
+| **Total Return**       | 225.83%            | 32.46%               |
+| **Annual Return**      | 62.03%             | 67.96%               |
+| **Sharpe Ratio**       | 3.74               | 3.36                 |
+| **Max Drawdown (MDD)** | -4.46%             | -3.99%               |
 
 **Observation:** The strategy showed high stability across the historical period. The selective threshold, 0.55 significantly reduced the number of trades, ensuring that only the highest probability setups were taken.
 
@@ -131,13 +131,14 @@ aightbet/
 ├── test_tuned.py          # OOS testing script
 ├── train_ensemble.py      # Train Ensemble Models script
 ├── test_ensemble.py       # OOS testing Ensemble Models script
-├── aightbet/                # Core package
+├── aightbet/              # Core package
 │   ├── db_postgres.py     # PostgreSQL connector
 │   ├── processing.py      # OHLCV resampling
 │   ├── features.py        # Technical indicator logic
 │   ├── model.py           # LightGBM training wrapper
 │   ├── backtest.py        # Vectorized backtesting engine (with SL/TP)
 │   ├── metrics.py         # Performance analytics
+│   ├── ensemble.py        # Combine Machine Learing models
 │   └── storage.py         # DuckDB storage interface
 ├── models/                # Containing the Trained Ensembled Models 
 ├── live/                  # Arena26 Paper Live Trading 
