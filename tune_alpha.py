@@ -99,8 +99,8 @@ def objective(trial):
     return sharpe
 
 def main():
-    if Path('best_params.json').exists():
-        print('best_params.json already exists. Skipping optimization to avoid changes.')
+    if Path('params_tuned.json').exists():
+        print('params_tuned.json already exists. Skipping optimization to avoid changes.')
         return
 
     print("Starting Optuna optimization...")
