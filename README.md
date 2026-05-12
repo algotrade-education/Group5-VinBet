@@ -145,11 +145,11 @@ The model was ensembled with LightGBM, XGBoost, and CatBoost with an optimized r
 | **Max Drawdown**       | **-2.09%**           |
 | **Number of Trades**   | **132**              |
 
-### 4.4. Paper Trading Server Competition (Arena 26) Result
+### 4.4. Paper Trading Server Competition Result (Arena 26)
 The automation system was connected to the live paper trading system competition (Arena 26) during the period of **March 10 - May 05, 2026** as part of the course: CS408 - Computational Finance.
 
-#### Final Standing: 1ST
-(Aight Bet we won)
+#### Final Standing: 1st
+(Aight Bet, we won)
 
 | Metric                 | Value                |
 |:-----------------------|:---------------------|
