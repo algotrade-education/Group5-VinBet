@@ -1,4 +1,3 @@
-<img width="1606" height="644" alt="arena26 result" src="https://github.com/user-attachments/assets/a5bd5f74-b7ed-4204-b42d-508266f91c39" />
 # AightBet: VN30 Index Futures Quantitative Alpha
 
 This project implements a selective, machine-learning-based alpha strategy for the VN30 Index Futures market.
