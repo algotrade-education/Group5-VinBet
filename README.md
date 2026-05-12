@@ -47,8 +47,8 @@ A selective, high-confidence machine learning model can identify 5-minute window
 - **Position Sizing:** Fixed Capital Allocation Per Trade (constant fraction of NAV)
   
 - **Exit Logic:**
-  - $Low <= (1 - SL%) x Open$
-  - $High >= (1 + TP%) x Open$
+  - Low <= (1 - SL%) x Open
+  - High >= (1 + TP%) x Open
   - Before ATC (Close all positions before the end of day)
     
 - **Execution Logic:**
@@ -148,9 +148,10 @@ The model was ensembled with LightGBM, XGBoost, and CatBoost with an optimized r
 ### 4.4. Paper Trading Server Competition (Arena 26) Result
 The automation system was connected to the live paper trading system competition (Arena 26) during the period of **March 10 - May 05, 2026** as part of the course: CS408 - Computational Finance.
 
-#### Final Standing: 1st
+#### Final Standing: 1ST
+(Aight Bet we won)
 
-| Metric                 | Value (Tuned OOS)    |
+| Metric                 | Value                |
 |:-----------------------|:---------------------|
 | **Total NAV**          | **557.540.000**      |
 | **Total P&L**          | **+11.51%**          |
