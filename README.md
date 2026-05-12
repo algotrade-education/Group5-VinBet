@@ -5,28 +5,74 @@ This project implements a selective, machine-learning-based alpha strategy for t
 ## 1. Trading Hypothesis
 
 ### Observation
-Intraday price action in the VN30 Futures market (VN30F) exhibits short-term momentum and mean-reversion characteristics that are often obscured by market noise and high transaction costs. Standard high-frequency strategies often fail because the "bid-ask spread + fees" exceeds the average edge per trade.
+Intraday price action in the **VN30 Futures Market (VN30F1M)** exhibits **short-term momentum and mean-reversion characteristics** that are often obscured by market noise and high transaction costs. **Standard high-frequency strategies often fail** because the "bid-ask spread + fees" exceeds the average edge per trade.
 
-### Hypothesis
-A selective, high-confidence machine learning model can identify 5-minute windows where the probability of a positive return is high enough to overcome transaction costs. By "keeping quiet" and avoiding low-conviction periods, the strategy can maximize the Sharpe Ratio and reduce the impact of fees.
+
+A selective, high-confidence machine learning model can identify 5-minute windows where the probability of a positive return is high enough to overcome transaction costs. By "keeping quiet" and avoiding low-conviction periods, utilizing opportunities based on **Price Volatility and Momentum Oscillations**, the strategy can **maximize the Sharpe Ratio** and reduce the impact of fees.
 
 ### Algorithm & Features
-- **Model:** LightGBM (Gradient Boosted Decision Trees) for binary classification (Predicting $Price_{t+5} > Price_t$).
+- **Model:** An ensemble of models: **55% LightGBM (Gradient Boosted Decision Trees) + 30% XGBoost + 15% CatBoost**, for binary classification (Predicting $Price_{t+5} > Price_t$).
 - **Timeframe:** 5-minute OHLCV candles.
 - **Features:** 
-    - **Momentum:** RSI(14), MACD(12, 26, 9).
-    - **Volatility:** ATR(14), Bollinger Bands (20, 2).
+    - **Price Volatility:**
+        - **ATR(14):** Average market volatility over the past 14 candles.
+        - **Bollinger Bands (20, 2):** Volatility & price extremes over the past 20 windows with 2σ from the mean (~95%).
+    - **Momentum:**
+        - **RSI(14):** Strength of recent buying vs. selling pressure over the past 14 candles.
+        - **MACD(12, 26, 9):** Short-term momentum by computing EMA(12) - EMA(26), then smoothing with the EMA(9) signal line.
     - **Returns:** Rolling log-returns and historical volatility.
 - **Risk Management:** 
-    - **Stop-Loss (SL):** Fixed percentage exit (Optimized: 0.56%).
-    - **Take-Profit (TP):** Fixed percentage exit (Optimized: 2.14%).
-    - **Threshold:** Only enter when the model confidence $P(Up) > 0.55$.
+    - **Stop-Loss (SL):** Fixed percentage exit.
+    - **Take-Profit (TP):** Fixed percentage exit.
+    - **Threshold:** Only enter when the model confidence $P(Up) > 0.55$ to ensurer that only the highest probability setups were taken.
+
+### Hypothesis
+- **Target Market:** VN30 Futures Market (HNX - VN30F1M)
+  
+- **Entry Logic:** Only set position when **all** of the conditions are met.
+  
+  - **Long**
+    - $P(Up) > 0.55$
+    - $Price > Upper Bollinger$
+    - $RSI > 70$
+    - $MACD Line > Signal Line$
+    - $ATR_{t-1} > ATR_{t}$
+
+  - **Short**
+    - $P(Up) < 0.45$
+    - $Price < Lower Bollinger$
+    - $RSI < 30$
+    - $MACD Line < Signal Line$
+    - $ATR_{t-1} > ATR_{t}$
+    
+- **Position Sizing:** Fixed Capital Allocation Per Trade (constant fraction of NAV)
+  
+- **Exit Logic:**
+  - $Low <= Open × (1 - SL%)$
+  - $High >= Open × (1 + TP%)$
+  - Before ATC (Close all positions before the end of day)
+    
+- **Execution Logic:**
+  - Enter immediately after signal confirmation
+  - Exit immediately when Stop-Loss/Take-Profit triggers
 
 ---
 
-## 2. In-Sample Backtesting (2023 – 2025)
+## 2. In-Sample Backtesting (Jan 2023 – Dec 2025)
 
 The full LightLGBM model was trained on 80% of the historical data and validated on the remaining 20% to find the optimal hyperparameters using Optuna.
+
+### Settings:
+- **Metrics:** LogLoss, ROC-AUC
+- **Training Config:**
+  - 80/20 chronological split
+  - $num_leaves = 30$
+  - $learning_rate = 0.05$
+  - $feature_fraction = 0.9$
+  - $num_boost_round = 1000$
+  - $Early stopping (50 rounds)$
+- **Evaluation:** Accuracy, ROC-AUC, Threshold = 0.5
+
 
 | Metric                 | Training Set (80%) | Validation Set (20%) |
 |:-----------------------|:-------------------|:---------------------|
@@ -39,10 +85,38 @@ The full LightLGBM model was trained on 80% of the historical data and validated
 
 ---
 
-## 3. Out-of-Sample (OOS) Results: (3-5/2026)
-To test robustness, the strategy was executed on a completely unseen period: **March - May 2026**.
+## 3. Optimization Strategy
+### 3.1. Optuna - Tree-structured Parzen Estimator (TPE)
+- **Optuna:**  Automatic hyperparameter optimization framework that efficiently searches for the best model and strategy parameters by maximizing (or minimizing) a user-defined objective function. 
 
-### 3.1. Without Optimization
+- **Main Algorithm: Tree-structured Parzen Estimator (TPE):**
+
+<img width="1202" height="306" alt="Optuna" src="https://github.com/user-attachments/assets/4a53ca2f-4b0b-4d38-a17b-6d87896ef856" />
+
+    - Builds probabilistic models of good vs bad trials.
+    - Samples new parameters where probability of improvement is high.
+    - Balances exploration vs exploitation.
+
+=> Focus on high-performing parameter regions, prunes bad trials early, and handles conditional search spaces
+
+### 3.2. Combination of Optuna & Grid Search
+- **Problem:** When using & combining models, there are too many hyperparameters.
+⇒ The search space becomes too large. 
+**⇒ Optuna on its own can NOT find the optimal hyperparameter set.** 
+
+- **Solution:**
+    - Use Optuna with Tree-structured Parzen Estimator (TPE) first to select potential shrunken search spaces after the pruning step.
+    - Then use **Grid Search (grid_size = 7<img width="1202" height="306" alt="Optuna" src="https://github.com/user-attachments/assets/d386fd49-4c92-4933-8bad-3f677537504f" />
+) on each of the shrunken spaces**, to find the optimal set of hyperparameters.
+
+---
+
+## 4. Out-of-Sample (OOS) Results: (3-5/2026)
+To test robustness, the strategy was executed on a completely unseen period: **March - May 2026**. 
+
+**This is the same period as the Paper Trading Server Competition for class CS408: Algorithmic Trading (Arena 26)**
+
+### 4.1. Without Optimization
 Initially, a standard 5-minute strategy was tested on tight SL/TP.
 
 | Metric                 | Value (Baseline OOS) |
@@ -52,7 +126,7 @@ Initially, a standard 5-minute strategy was tested on tight SL/TP.
 | **Max Drawdown**       | -6.93%               |
 | **Outcome**            | **Near-Breakeven**   |
 
-### 3.2. With Optuna Optimization (Tuned)
+### 4.2. With Optuna Optimization (Tuned)
 The model was retuned to maximize the Sharpe Ratio by being more selective and optimizing SL/TP levels.
 
 | Metric                 | Value (Tuned OOS)    |
@@ -63,7 +137,7 @@ The model was retuned to maximize the Sharpe Ratio by being more selective and o
 | **Max Drawdown**       | **-2.43%**           |
 | **Number of Trades**   | **225**              |
 
-### 3.3 With Tuned Ensemble of Models
+### 4.3 With Tuned Ensemble of Models
 The model was ensembled with LightGBM, XGBoost, and CatBoost with an optimized ratio.
 
 | Metric                 | Value (Tuned OOS)    |
@@ -76,7 +150,7 @@ The model was ensembled with LightGBM, XGBoost, and CatBoost with an optimized r
 
 ---
 
-## 4. Usage
+## 5. Usage
 
 ### Prerequisites
 - Python 3.13
@@ -123,7 +197,7 @@ uv sync
 
 ---
 
-## 5. Project Structure
+## 6. Project Structure
 ```
 aightbet/
 ├── main.py                # Data collection entry point
