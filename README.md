@@ -89,26 +89,24 @@ The full LightLGBM model was trained on 80% of the historical data and validated
 ### 3.1. Optuna - Tree-structured Parzen Estimator (TPE)
 - **Optuna:**  Automatic hyperparameter optimization framework that efficiently searches for the best model and strategy parameters by maximizing (or minimizing) a user-defined objective function. 
 
-- **Main Algorithm: Tree-structured Parzen Estimator (TPE):**
+- **Main Algorithm: Tree-structured Parzen Estimator (TPE):** Focus on high-performing parameter regions, prunes bad trials early, and handles conditional search spaces.
 
 <img width="1202" height="306" alt="Optuna" src="https://github.com/user-attachments/assets/4a53ca2f-4b0b-4d38-a17b-6d87896ef856" />
 
-    - Builds probabilistic models of good vs bad trials.
-    - Samples new parameters where probability of improvement is high.
-    - Balances exploration vs exploitation.
-
-=> Focus on high-performing parameter regions, prunes bad trials early, and handles conditional search spaces
 
 ### 3.2. Combination of Optuna & Grid Search
 - **Problem:** When using & combining models, there are too many hyperparameters.
+  
 - ⇒ The search space becomes too large.
-**⇒ Optuna on its own can NOT find the optimal hyperparameter set.** 
+
+- **⇒ Optuna on its own can NOT find the optimal hyperparameter set.** 
 
 - **Solution:**
     - Use Optuna with Tree-structured Parzen Estimator (TPE) first to select potential shrunken search spaces after the pruning step.
     - Then use **Grid Search (grid_size = 7) on each of the shrunken spaces**, to find the optimal set of hyperparameters.
 
-- <img width="1852" height="538" alt="3 2" src="https://github.com/user-attachments/assets/c1fd180d-d7e1-4520-9845-748853f6acbe" />
+<img width="1852" height="538" alt="3 2" src="https://github.com/user-attachments/assets/c1fd180d-d7e1-4520-9845-748853f6acbe" />
+
 ---
 
 ## 4. Out-of-Sample (OOS) Results: (3-5/2026)
