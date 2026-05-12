@@ -101,14 +101,14 @@ The full LightLGBM model was trained on 80% of the historical data and validated
 
 ### 3.2. Combination of Optuna & Grid Search
 - **Problem:** When using & combining models, there are too many hyperparameters.
-⇒ The search space becomes too large. 
+- ⇒ The search space becomes too large.
 **⇒ Optuna on its own can NOT find the optimal hyperparameter set.** 
 
 - **Solution:**
     - Use Optuna with Tree-structured Parzen Estimator (TPE) first to select potential shrunken search spaces after the pruning step.
-    - Then use **Grid Search (grid_size = 7<img width="1202" height="306" alt="Optuna" src="https://github.com/user-attachments/assets/d386fd49-4c92-4933-8bad-3f677537504f" />
-) on each of the shrunken spaces**, to find the optimal set of hyperparameters.
+    - Then use **Grid Search (grid_size = 7) on each of the shrunken spaces**, to find the optimal set of hyperparameters.
 
+- <img width="1852" height="538" alt="3 2" src="https://github.com/user-attachments/assets/c1fd180d-d7e1-4520-9845-748853f6acbe" />
 ---
 
 ## 4. Out-of-Sample (OOS) Results: (3-5/2026)
