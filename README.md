@@ -7,7 +7,6 @@ This project implements a selective, machine-learning-based alpha strategy for t
 ### Observation
 Intraday price action in the **VN30 Futures Market (VN30F1M)** exhibits **short-term momentum and mean-reversion characteristics** that are often obscured by market noise and high transaction costs. **Standard high-frequency strategies often fail** because the "bid-ask spread + fees" exceeds the average edge per trade.
 
-
 A selective, high-confidence machine learning model can identify 5-minute windows where the probability of a positive return is high enough to overcome transaction costs. By "keeping quiet" and avoiding low-conviction periods, utilizing opportunities based on **Price Volatility and Momentum Oscillations**, the strategy can **maximize the Sharpe Ratio** and reduce the impact of fees.
 
 ### Algorithm & Features
@@ -33,23 +32,23 @@ A selective, high-confidence machine learning model can identify 5-minute window
   
   - **Long**
     - $P(Up) > 0.55$
-    - $Price > Upper Bollinger$
+    - Price > Upper Bollinger
     - $RSI > 70$
-    - $MACD Line > Signal Line$
+    - MACD Line > Signal Line
     - $ATR_{t-1} > ATR_{t}$
 
   - **Short**
     - $P(Up) < 0.45$
-    - $Price < Lower Bollinger$
+    - Price < Lower Bollinger
     - $RSI < 30$
-    - $MACD Line < Signal Line$
+    - MACD Line < Signal Line
     - $ATR_{t-1} > ATR_{t}$
     
 - **Position Sizing:** Fixed Capital Allocation Per Trade (constant fraction of NAV)
   
 - **Exit Logic:**
-  - $Low <= Open × (1 - SL%)$
-  - $High >= Open × (1 + TP%)$
+  - $Low <= (1 - SL%) x Open$
+  - $High >= (1 + TP%) x Open$
   - Before ATC (Close all positions before the end of day)
     
 - **Execution Logic:**
@@ -66,11 +65,11 @@ The full LightLGBM model was trained on 80% of the historical data and validated
 - **Metrics:** LogLoss, ROC-AUC
 - **Training Config:**
   - 80/20 chronological split
-  - $num_leaves = 30$
-  - $learning_rate = 0.05$
-  - $feature_fraction = 0.9$
-  - $num_boost_round = 1000$
-  - $Early stopping (50 rounds)$
+  - num_leaves = 30
+  - learning_rate = 0.05
+  - feature_fraction = 0.9
+  - num_boost_round = 1000
+  - Early stopping (50 rounds)
 - **Evaluation:** Accuracy, ROC-AUC, Threshold = 0.5
 
 
@@ -110,7 +109,7 @@ The full LightLGBM model was trained on 80% of the historical data and validated
 ---
 
 ## 4. Out-of-Sample (OOS) Results: (3-5/2026)
-To test robustness, the strategy was executed on a completely unseen period: **March - May 2026**. 
+To test robustness, the automation system was executed on a completely unseen period: **March - May 2026**. 
 
 **This is the same period as the Paper Trading Server Competition for class CS408: Algorithmic Trading (Arena 26)**
 
@@ -135,7 +134,7 @@ The model was retuned to maximize the Sharpe Ratio by being more selective and o
 | **Max Drawdown**       | **-2.43%**           |
 | **Number of Trades**   | **225**              |
 
-### 4.3 With Tuned Ensemble of Models
+### 4.3. With Tuned Ensemble of Models
 The model was ensembled with LightGBM, XGBoost, and CatBoost with an optimized ratio.
 
 | Metric                 | Value (Tuned OOS)    |
@@ -145,6 +144,20 @@ The model was ensembled with LightGBM, XGBoost, and CatBoost with an optimized r
 | **Sharpe Ratio**       | **7.51**             |
 | **Max Drawdown**       | **-2.09%**           |
 | **Number of Trades**   | **132**              |
+
+### 4.4. Paper Trading Server Competition (Arena 26) Result
+The automation system was connected to the live paper trading system competition (Arena 26) during the period of **March 10 - May 05, 2026** as part of the course: CS408 - Computational Finance.
+
+#### Final Standing: 1st
+
+| Metric                 | Value (Tuned OOS)    |
+|:-----------------------|:---------------------|
+| **Total NAV**          | **557.540.000**      |
+| **Total P&L**          | **+11.51%**          |
+| **Gross Notional**     | **719.12x**          |
+| **Close Notional**     | **359.74x**          |
+| **Margin Usage**       | **179.78x**          |
+| **Round Trips**        | **958**              |
 
 ---
 
